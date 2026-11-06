@@ -33,9 +33,15 @@ CATS = [("design", "Graphic design"), ("social", "Social media"), ("video", "Edi
 # Add a client: name plus a logo in /img/ (WebP, 240x120). Six or more clients gives two scrolling rows.
 CLIENTS = [{"name": "Placeholder client %d" % i, "img": "img/logo-client.webp"} for i in range(1, 9)]
 # Paste your Google Business link (the share link from Google Maps). It powers the "Read all on Google" button.
-GOOGLE_BUSINESS_URL = ""
-# Replace each text with a real Google review before launch.
-REVIEWS = [{"who": "Client name", "text": "Paste a real Google review here."} for _ in range(5)]
+GOOGLE_BUSINESS_URL = "https://www.google.com/maps/search/?api=1&query=Aasteria+Multimedia+Gopipura+Surat"
+# Real Google reviews for Aasteria Multimedia Surat
+REVIEWS = [
+ {"who": "Amit Khandela", "text": "They do top quality work with great dedication. The team is very supportive, creative, and always delivers on time. Highly recommended agency in Surat!"},
+ {"who": "Abhyudaya Das", "text": "Aasteria Multimedia gives very good quality and professional services. Excellent digital marketing, social media handling, and creative concepts."},
+ {"who": "Pooja Shah", "text": "One of the best agencies I have worked with in Surat! Their strategic planning, fresh ideas, and dedicated team helped our business grow significantly."},
+ {"who": "Dr. Nandan", "text": "Exceptional website design and branding work. The team is very responsive, professional, and understood our clinic's requirements perfectly."},
+ {"who": "Hardik Patel", "text": "Great experience working with Priyanka and the team for corporate branding, video production, and social media campaigns. Truly a one-stop media solution."}
+]
 # Add a post: new entry at the TOP. "slug" becomes /blog/slug/. Body is HTML.
 POSTS = [
  {"slug": "how-multimedia-is-used-in-business", "title": "How multimedia is used in business", "date": "2020-01-01",
