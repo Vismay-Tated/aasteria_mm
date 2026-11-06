@@ -1,0 +1,14 @@
+# Old WordPress URL  New URL  (works on Netlify and Cloudflare Pages)
+# CHECK these against the old site's sitemap (aasteria.com/sitemap_index.xml) before launch.
+/how-multimedia-is-used-in-business        /blog/how-multimedia-is-used-in-business/        301
+/get-helpful-tips-about-lead-generation    /blog/helpful-tips-about-lead-generation/        301
+/best-advice-for-writing-blog              /blog/best-advice-for-writing-a-blog/            301
+/blog-2                                    /blog/                                           301
+/home                                      /                                                301
+/services                                  /#services                                       301
+/portfolio                                 /#work                                           301
+/about-us                                  /#about                                          301
+/contact-us                                /#contact                                        301
+/category/*                                /blog/                                           301
+/wp-content/*                              /                                                301
+/feed                                      /blog/                                           301

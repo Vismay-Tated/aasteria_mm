@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://aasteria.com/sitemap.xml

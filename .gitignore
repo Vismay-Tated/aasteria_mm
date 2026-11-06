@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Scratch / temp files
+site/check.py
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/
+

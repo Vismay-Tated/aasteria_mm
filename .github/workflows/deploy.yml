@@ -1,0 +1,46 @@
+name: Build and Deploy to Hostinger
+
+on:
+  push:
+    branches:
+      - main   # runs every time you push to main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Download your code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # 3. Run build.py — generates index.html, blog pages, sitemap
+      - name: Build site
+        working-directory: ./site
+        run: python build.py
+        env:
+          # Optional: live Google reviews (add these in GitHub → Settings → Secrets)
+          GOOGLE_PLACES_KEY: ${{ secrets.GOOGLE_PLACES_KEY }}
+          GOOGLE_PLACE_ID:   ${{ secrets.GOOGLE_PLACE_ID }}
+
+      # 4. Deploy the built site/ folder to Hostinger via FTP
+      - name: Deploy to Hostinger via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server:       ${{ secrets.FTP_HOST }}      # e.g. ftp.aasteria.com
+          username:     ${{ secrets.FTP_USER }}      # e.g. u123456789
+          password:     ${{ secrets.FTP_PASS }}
+          local-dir:    ./site/                      # the folder to upload
+          server-dir:   /public_html/                # Hostinger root folder
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/build.py
+            **/check.py
+
