@@ -30,8 +30,13 @@ WORK = [
  {"type": "print", "title": "Placeholder brochure design", "line": "Replace with the client and the print job.", "img": "img/ph-print.webp"},
 ]
 CATS = [("design", "Graphic design"), ("social", "Social media"), ("video", "Edited videos"), ("reel", "Edited Reels"), ("bts", "Behind the scenes"), ("web", "Websites"), ("print", "Print")]
-# Add a client: name plus a logo in /img/ (WebP, 240x120). Six or more clients gives two scrolling rows.
-CLIENTS = [{"name": "Placeholder client %d" % i, "img": "img/logo-client.webp"} for i in range(1, 9)]
+# Add a client: name plus a logo in /img/ (PNG or WebP).
+CLIENTS = [
+ {"name": "Client 1", "img": "img/clogo/c1.png"},
+ {"name": "Client 2", "img": "img/clogo/c2.png"},
+ {"name": "Client 3", "img": "img/clogo/c3.png"},
+ {"name": "Client 4", "img": "img/clogo/c4.png"},
+]
 # Paste your Google Business link (the share link from Google Maps). It powers the "Read all on Google" button.
 GOOGLE_BUSINESS_URL = "https://www.google.com/maps/search/?api=1&query=Aasteria+Multimedia+Gopipura+Surat"
 # Real Google reviews for Aasteria Multimedia Surat
@@ -300,8 +305,10 @@ def home():
     present=[(k,n) for k,n in CATS if any(x["type"]==k for x in WORK)]
     filt='<button class="filter" data-f="all" aria-pressed="true">All work</button>'+''.join(f'<button class="filter" data-f="{k}" aria-pressed="false">{E(n)}</button>' for k,n in present)
     s+=f'<section class="work" id="work"><div class="wrap">{H("work","Recent Work")}<p class="muted">Graphic design, edited reels, videos, behind the scenes and websites — a snapshot of our latest projects.</p><div class="filters" role="group" aria-label="Filter our work">{filt}</div><p class="muted work-count" aria-live="polite"></p><ul class="work-grid">'+"".join(work_item(x) for x in WORK)+'</ul></div></section><dialog id="lightbox" aria-label="Work preview"><div class="lb-box"><div class="lb-body"></div><p class="lb-cap"></p><div class="lb-bar"><div class="button-row" style="margin:0"><button class="button plain" data-lb="-1">Previous</button><button class="button plain" data-lb="1">Next</button></div><button class="button" data-lb="close">Close</button></div></div></dialog>'
-    lg=[(c["name"],c["img"]) for c in CLIENTS]; half=len(lg)//2; rowb=lg[half:]+lg[:half]
-    s+=f'<section class="clients" id="clients"><div class="wrap">{H("clients","Clients we have worked with")}<p class="muted">Hover to pause the scroll.</p></div>{logo_row(lg)}{logo_row(rowb,"reverse") if len(lg)>=6 else ""}</section>'
+    lg=[(c["name"],c["img"]) for c in CLIENTS]
+    track_items = lg * (6 // len(lg) + 1) if (0 < len(lg) < 6) else lg
+    half=len(track_items)//2; rowb=track_items[half:]+track_items[:half]
+    s+=f'<section class="clients" id="clients"><div class="wrap">{H("clients","Clients we have worked with")}<p class="muted">Hover to pause the scroll.</p></div>{logo_row(track_items)}{logo_row(rowb,"reverse") if len(track_items)>=6 else ""}</section>'
     slides=''.join(f'<figure class="review-slide{" on" if i==0 else ""}" id="rv-{i}"><div class="stars">{ic("star2")*int(round(float(r.get("rating",5))))}</div><p class="review-text">{E(r["text"])}</p><figcaption><span class="avatar">{E(initials(r["who"]))}</span><span><b>{E(r["who"])}</b><br><span class="muted">{(E(r["when"])+", ") if r.get("when") else ""}Google review</span></span></figcaption></figure>' for i,r in enumerate(REVIEWS))
     dots_=''.join(f'<button class="review-dot" data-i="{i}" aria-selected="{"true" if i==0 else "false"}" aria-label="Show review from {E(r["who"])}">{E(initials(r["who"]))}</button>' for i,r in enumerate(REVIEWS))
     s+=f'<section class="reviews" id="reviews"><div class="wrap review-wrap"><div class="review-summary">{H("star2","What clients say")}<p class="rating-big" data-count="{RATING}">{RATING}</p><div class="stars">{stars}</div><p class="muted">Rated {RATING} from {COUNT} Google reviews</p><div class="button-row"><a class="button plain" href="{MAPS}" rel="noopener">Read all on Google</a><a class="button" href="{WRITE}" rel="noopener">Write a review</a></div></div><div class="review-stage"><div class="review-slides">{slides}</div><div class="review-nav" aria-label="Choose a review">{dots_}</div><div class="review-progress run"><i></i></div></div></div></section>'

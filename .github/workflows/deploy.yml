@@ -22,19 +22,17 @@ jobs:
 
       # 3. Run build.py — generates index.html, blog pages, sitemap
       - name: Build site
-        working-directory: ./site
         run: python build.py
         env:
           GOOGLE_PLACES_KEY: ${{ secrets.GOOGLE_PLACES_KEY }}
           GOOGLE_PLACE_ID:   ${{ secrets.GOOGLE_PLACE_ID }}
 
       # 4. Copy built files into a clean deploy/ folder
-      #    This prevents a "site/" subfolder being created on the server
+      #    This ensures only production web files are uploaded to Hostinger
       - name: Prepare deploy folder
         run: |
           mkdir -p deploy
-          cp -r site/. deploy/
-          rm -f deploy/build.py deploy/check.py
+          cp -r index.html blog img robots.txt sitemap.xml _redirects deploy/
 
       # 5. Deploy deploy/ folder contents to Hostinger public_html/
       - name: Deploy to Hostinger via FTP
